@@ -213,7 +213,7 @@ function routeRequest(req, res) {
     return;
   }
 
-  if (req.method === "GET" && pathname === "/availability") {
+  if (req.method === "GET" && pathname === "/contact/availability") {
     sendJson(res, 200, availability);
     return;
   }

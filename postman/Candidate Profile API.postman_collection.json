@@ -122,11 +122,12 @@
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "{{baseUrl}}/availability",
+          "raw": "{{baseUrl}}/contact/availability",
           "host": [
             "{{baseUrl}}"
           ],
           "path": [
+            "contact",
             "availability"
           ]
         }

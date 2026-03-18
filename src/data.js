@@ -170,7 +170,7 @@ const projects = [
 ];
 
 const availability = {
-  status: "open_to_opportunities",
+  status: "open to opportunities",
 };
 
 const resume = {

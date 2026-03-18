@@ -33,6 +33,6 @@ export EMAILJS_PRIVATE_KEY=your_private_key # optional, recommended for server-s
 - `GET /experience/:id`
 - `GET /projects`
 - `GET /projects/:id`
-- `GET /availability`
+- `GET /contact/availability`
 - `GET /resume?format=json|pdf`
 - `POST /contact`

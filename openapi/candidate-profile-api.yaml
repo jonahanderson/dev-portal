@@ -12,7 +12,6 @@ tags:
   - name: Candidate
   - name: Experience
   - name: Projects
-  - name: Availability
   - name: Resume
   - name: Contact
 paths:
@@ -97,9 +96,9 @@ paths:
                 $ref: '#/components/schemas/Project'
         '404':
           $ref: '#/components/responses/NotFound'
-  /availability:
+  /contact/availability:
     get:
-      tags: [Availability]
+      tags: [Contact]
       summary: Get availability status
       operationId: getAvailability
       responses:
@@ -335,7 +334,7 @@ components:
       properties:
         status:
           type: string
-          example: open_to_opportunities
+          example: open to opportunities
     ResumeExperience:
       type: object
       required:
