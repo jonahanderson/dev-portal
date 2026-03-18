@@ -1,6 +1,6 @@
 # Candidate Profile API
 
-Personal APIs for use in Postman today and a developer portal later.
+Candidate APIs as a resume. Deployed with Render.
 
 ## Run locally
 

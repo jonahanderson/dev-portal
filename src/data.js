@@ -196,7 +196,7 @@ const resume = {
 };
 
 const resumePdf = {
-  url: "https://assets.jonahanderson.me/jonah-anderson-resume.pdf",
+  url: "https://www.jonahanderson.me/Jonah-Anderson-Resume.pdf",
 };
 
 module.exports = {
