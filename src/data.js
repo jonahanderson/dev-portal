@@ -15,7 +15,7 @@ const experience = [
     company_start_date: "2020-11-01",
     company_end_date: "2023-05-31",
     current: false,
-    summary: "Led third-party integration strategy, customer data pipeline delivery, ingestion scale improvements, and migration work across the Qualtrics platform.",
+    summary: "Qualtrics is an experience management software company, and in this role I owned roadmap and strategy for third-party integrations.",
     roles: [
       {
         title: "Product Manager",
@@ -35,7 +35,7 @@ const experience = [
     company_start_date: "2023-05-01",
     company_end_date: "2024-03-31",
     current: false,
-    summary: "Expanded the public API, led beta and GA launches, and used SQL-driven analysis to reduce integration-related transaction declines by 53%.",
+    summary: "Coast is a technology company with API-driven financial and fleet-related products, and in this role I launched API capabilities, improved integration performance through data analysis, and delivered telematics and accounting integrations",
     roles: [
       {
         title: "Technical Product Manager",
@@ -50,7 +50,7 @@ const experience = [
     company_start_date: "2024-04-01",
     company_end_date: null,
     current: true,
-    summary: "Owned and evolved TMS integrations across partner onboarding, enterprise pilots, and platform strategy after the Trucker Tools acquisition.",
+    summary: "DAT Freight & Analytics is a freight technology company, and in this role I led strategy and execution for TMS and API integrations, improving onboarding, partner visibility, and migration planning to protect and grow enterprise revenue.",
     roles: [
       {
         title: "Senior Product Manager, Integrations",
