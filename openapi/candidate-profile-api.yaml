@@ -292,7 +292,7 @@ components:
       properties:
         id:
           type: string
-          example: proj_001
+          example: proj_006
         name:
           type: string
           example: Empire

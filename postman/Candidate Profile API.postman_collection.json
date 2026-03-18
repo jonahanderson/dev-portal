@@ -105,13 +105,13 @@
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "{{baseUrl}}/projects/proj_001",
+          "raw": "{{baseUrl}}/projects/proj_006",
           "host": [
             "{{baseUrl}}"
           ],
           "path": [
             "projects",
-            "proj_001"
+            "proj_006"
           ]
         }
       }

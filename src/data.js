@@ -102,7 +102,7 @@ const experienceNewestFirst = [...experience].sort((a, b) => {
 
 const projects = [
   {
-    id: "proj_001",
+    id: "proj_006",
     name: "Empire",
     summary: "Empire is a lightweight web app I built so groups can play the party game Empire on mobile devices.",
     description: "Empire is a lightweight web app built for mobile play, created as an AI-assisted project and deployed on Vercel.",
@@ -113,7 +113,7 @@ const projects = [
     },
   },
   {
-    id: "proj_002",
+    id: "proj_005",
     name: "MoonBot",
     summary: "MoonBot is a Python tool that helps review Reddit posts and generate AI-assisted comments, built to farm MOONs with fine-tuning models and real world AI automation.",
     description: "MoonBot is a Python automation project using the Reddit API, SQLite, and AI workflows to review posts and generate comments.",
@@ -124,7 +124,7 @@ const projects = [
     },
   },
   {
-    id: "proj_003",
+    id: "proj_004",
     name: "jonahanderson.eth",
     summary: "A personal experiment using ENS, IPFS, and decentralized hosting to understand how identity and websites can work beyond traditional DNS infrastructure.",
     description: "A decentralized web experiment exploring ENS, IPFS, and alternative approaches to personal identity and hosting.",
@@ -135,7 +135,7 @@ const projects = [
     },
   },
   {
-    id: "proj_004",
+    id: "proj_003",
     name: "Building My Personal Website with React",
     summary: "I built my first personal site with React as a hands-on way to learn real frontend architecture, styling, routing, and deployment decisions.",
     description: "A personal frontend learning project built with React, CSS, and EmailJS to understand architecture, styling, routing, and shipping decisions.",
@@ -146,7 +146,7 @@ const projects = [
     },
   },
   {
-    id: "proj_005",
+    id: "proj_002",
     name: "GreekRho",
     summary: "GreekRho was an early startup-style campus platform project for Greek organizations, focused on centralizing member, communication, and organization workflows.",
     description: "GreekRho was an early startup-style product project focused on helping Greek organizations manage members, communication, and discovery workflows.",
@@ -157,7 +157,7 @@ const projects = [
     },
   },
   {
-    id: "proj_006",
+    id: "proj_001",
     name: "WahooGives",
     summary: "WahooGives is a small data project built to collect and structure donation activity during UVA's WahooGives event so trends and momentum can be analyzed more easily.",
     description: "A Python data project focused on collecting fundraising event activity and structuring it for easier trend and momentum analysis.",
