@@ -304,12 +304,8 @@ components:
         - $ref: '#/components/schemas/ProjectSummary'
         - type: object
           required:
-            - description
             - links
           properties:
-            description:
-              type: string
-              example: Empire is a lightweight web app built for mobile-friendly party gameplay, created as an AI-assisted product build and deployed on Vercel.
             tags:
               type: array
               items:
