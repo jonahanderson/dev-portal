@@ -250,6 +250,7 @@ components:
       required:
         - title
         - start_date
+        - accomplishments
       properties:
         title:
           type: string
@@ -264,6 +265,13 @@ components:
             - 'null'
           format: date
           example: 2023-05-31
+        accomplishments:
+          type: array
+          items:
+            type: string
+          example:
+            - Led product strategy and roadmap for third-party API integrations, expanding partner connectivity and platform capability.
+            - Scaled ingestion infrastructure supporting 10% growth in record processing volume within six months.
     ProjectSummary:
       type: object
       required:
