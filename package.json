@@ -1,0 +1,13 @@
+{
+  "name": "candidate-profile-api",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Personal candidate profile API for local clients and future developer portal publishing.",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

@@ -1,0 +1,418 @@
+openapi: 3.1.0
+info:
+  title: Candidate Profile API
+  version: 1.0.0
+  description: Personal candidate profile API for local testing in Postman and future publishing to a developer portal.
+servers:
+  - url: http://localhost:3000
+    description: Local development
+  - url: https://api.jonahanderson.me
+    description: Production
+tags:
+  - name: Candidate
+  - name: Experience
+  - name: Projects
+  - name: Availability
+  - name: Resume
+  - name: Contact
+paths:
+  /candidate:
+    get:
+      tags: [Candidate]
+      summary: Get candidate profile
+      operationId: getCandidate
+      responses:
+        '200':
+          description: Candidate profile
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Candidate'
+  /experience:
+    get:
+      tags: [Experience]
+      summary: List experience entries
+      operationId: listExperience
+      parameters:
+        - in: query
+          name: current
+          schema:
+            type: boolean
+          required: false
+          description: When supplied, filters the response by current role status.
+      responses:
+        '200':
+          description: Experience list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Experience'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+  /experience/{id}:
+    get:
+      tags: [Experience]
+      summary: Get a single experience entry
+      operationId: getExperienceById
+      parameters:
+        - $ref: '#/components/parameters/IdParam'
+      responses:
+        '200':
+          description: Experience item
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Experience'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /projects:
+    get:
+      tags: [Projects]
+      summary: List projects
+      operationId: listProjects
+      responses:
+        '200':
+          description: Project list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProjectSummary'
+  /projects/{id}:
+    get:
+      tags: [Projects]
+      summary: Get a single project
+      operationId: getProjectById
+      parameters:
+        - $ref: '#/components/parameters/IdParam'
+      responses:
+        '200':
+          description: Project detail
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /availability:
+    get:
+      tags: [Availability]
+      summary: Get availability status
+      operationId: getAvailability
+      responses:
+        '200':
+          description: Availability status
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Availability'
+  /resume:
+    get:
+      tags: [Resume]
+      summary: Get resume data or PDF link
+      operationId: getResume
+      parameters:
+        - in: query
+          name: format
+          required: false
+          schema:
+            type: string
+            enum: [json, pdf]
+            default: json
+      responses:
+        '200':
+          description: Resume response
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/Resume'
+                  - $ref: '#/components/schemas/ResumePdf'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+  /contact:
+    post:
+      tags: [Contact]
+      summary: Submit a contact request
+      operationId: createContact
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ContactRequest'
+      responses:
+        '201':
+          description: Contact request accepted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContactResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+components:
+  parameters:
+    IdParam:
+      in: path
+      name: id
+      required: true
+      schema:
+        type: string
+  responses:
+    BadRequest:
+      description: Invalid request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+  schemas:
+    Candidate:
+      type: object
+      required:
+        - id
+        - name
+        - title
+        - location
+        - summary
+        - years_experience
+        - domains
+      properties:
+        id:
+          type: string
+          example: cand_001
+        name:
+          type: string
+          example: Jonah Anderson
+        title:
+          type: string
+          example: Senior Product Manager, Integrations
+        location:
+          type: string
+          example: Brooklyn, New York
+        summary:
+          type: string
+          example: Technical product leader focused on APIs, integrations, and partner platforms
+        years_experience:
+          type: integer
+          example: 5
+        domains:
+          type: array
+          items:
+            type: string
+          example: [APIs, Integrations, Logistics, Fintech, B2B SaaS]
+    Experience:
+      type: object
+      required:
+        - id
+        - company
+        - company_start_date
+        - current
+        - summary
+        - roles
+      properties:
+        id:
+          type: string
+          example: exp_dat
+        company:
+          type: string
+          example: Qualtrics
+        company_start_date:
+          type: string
+          format: date
+          example: 2020-11-01
+        company_end_date:
+          type:
+            - string
+            - 'null'
+          format: date
+          example: 2023-05-31
+        current:
+          type: boolean
+          example: false
+        summary:
+          type: string
+          example: Led third-party integration strategy, customer data pipeline delivery, ingestion scale improvements, and migration work across the Qualtrics platform.
+        roles:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExperienceRole'
+    ExperienceRole:
+      type: object
+      required:
+        - title
+        - start_date
+      properties:
+        title:
+          type: string
+          example: Product Manager
+        start_date:
+          type: string
+          format: date
+          example: 2022-01-01
+        end_date:
+          type:
+            - string
+            - 'null'
+          format: date
+          example: 2023-05-31
+    ProjectSummary:
+      type: object
+      required:
+        - id
+        - name
+        - summary
+      properties:
+        id:
+          type: string
+          example: proj_001
+        name:
+          type: string
+          example: Empire
+        summary:
+          type: string
+          example: Lightweight web app for groups to play the party game Empire on mobile devices.
+    Project:
+      allOf:
+        - $ref: '#/components/schemas/ProjectSummary'
+        - type: object
+          required:
+            - description
+            - links
+          properties:
+            description:
+              type: string
+              example: Empire is a lightweight web app built for mobile-friendly party gameplay, created as an AI-assisted product build and deployed on Vercel.
+            tags:
+              type: array
+              items:
+                type: string
+              example: [Web App, OpenAI Codex, Vercel, AI-Assisted Dev]
+            links:
+              type: object
+              properties:
+                github:
+                  type: string
+                  format: uri
+                live:
+                  type: string
+                  format: uri
+                details:
+                  type: string
+                  format: uri
+    Availability:
+      type: object
+      required:
+        - status
+      properties:
+        status:
+          type: string
+          example: open_to_opportunities
+    ResumeExperience:
+      type: object
+      required:
+        - company
+        - company_start_date
+        - current
+        - roles
+      properties:
+        company:
+          type: string
+        company_start_date:
+          type: string
+          format: date
+        company_end_date:
+          type:
+            - string
+            - 'null'
+          format: date
+        current:
+          type: boolean
+        roles:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExperienceRole'
+    Resume:
+      type: object
+      required:
+        - name
+        - title
+        - experience
+        - skills
+      properties:
+        name:
+          type: string
+        title:
+          type: string
+        experience:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResumeExperience'
+        skills:
+          type: array
+          items:
+            type: string
+    ResumePdf:
+      type: object
+      required:
+        - url
+      properties:
+        url:
+          type: string
+          format: uri
+    ContactRequest:
+      type: object
+      required:
+        - name
+        - email
+        - company
+        - message
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+          format: email
+        company:
+          type: string
+        message:
+          type: string
+    ContactResponse:
+      type: object
+      required:
+        - id
+        - status
+      properties:
+        id:
+          type: string
+          example: contact_xxx123
+        status:
+          type: string
+          example: received
+    Error:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: string
+          example: BAD_REQUEST
+        message:
+          type: string
+          example: Invalid request body
+    ErrorResponse:
+      type: object
+      required:
+        - error
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'

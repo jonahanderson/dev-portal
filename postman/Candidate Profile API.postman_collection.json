@@ -1,0 +1,205 @@
+{
+  "info": {
+    "name": "Candidate Profile API",
+    "_postman_id": "e6ef4d7f-a88f-4c48-8676-1c541c0a1f47",
+    "description": "Collection for local and production testing of the Candidate Profile API.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000"
+    }
+  ],
+  "item": [
+    {
+      "name": "Get Candidate",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/candidate",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "candidate"
+          ]
+        }
+      }
+    },
+    {
+      "name": "List Experience",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/experience",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "experience"
+          ]
+        }
+      }
+    },
+    {
+      "name": "List Current Experience",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/experience?current=true",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "experience"
+          ],
+          "query": [
+            {
+              "key": "current",
+              "value": "true"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Get Experience By Id",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/experience/exp_dat",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "experience",
+            "exp_dat"
+          ]
+        }
+      }
+    },
+    {
+      "name": "List Projects",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/projects",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "projects"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Get Project By Id",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/projects/proj_001",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "projects",
+            "proj_001"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Get Availability",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/availability",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "availability"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Get Resume JSON",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/resume?format=json",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "resume"
+          ],
+          "query": [
+            {
+              "key": "format",
+              "value": "json"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Get Resume PDF Link",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/resume?format=pdf",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "resume"
+          ],
+          "query": [
+            {
+              "key": "format",
+              "value": "pdf"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Create Contact Request",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Taylor Recruiter\",\n  \"email\": \"taylor@example.com\",\n  \"company\": \"Acme Corp\",\n  \"message\": \"Would love to connect about an integrations leadership role.\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/contact",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "contact"
+          ]
+        }
+      }
+    }
+  ]
+}
