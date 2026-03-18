@@ -12,6 +12,44 @@ const {
 } = require("./data");
 
 const PORT = Number.parseInt(process.env.PORT || "3000", 10);
+const EMAILJS_ENDPOINT = "https://api.emailjs.com/api/v1.0/email/send";
+
+async function sendContactEmail(payload) {
+  const serviceId = process.env.EMAILJS_SERVICE_ID;
+  const templateId = process.env.EMAILJS_TEMPLATE_ID;
+  const publicKey = process.env.EMAILJS_PUBLIC_KEY;
+  const privateKey = process.env.EMAILJS_PRIVATE_KEY;
+
+  if (!serviceId || !templateId || !publicKey) {
+    throw new Error("EMAIL_NOT_CONFIGURED");
+  }
+
+  const response = await fetch(EMAILJS_ENDPOINT, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      service_id: serviceId,
+      template_id: templateId,
+      user_id: publicKey,
+      ...(privateKey ? { accessToken: privateKey } : {}),
+      template_params: {
+        name: payload.name,
+        email: payload.email,
+        company: payload.company,
+        message: payload.message,
+      },
+    }),
+  });
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    const emailError = new Error("EMAIL_SEND_FAILED");
+    emailError.details = errorText;
+    throw emailError;
+  }
+}
 
 function sendJson(res, statusCode, payload) {
   const body = JSON.stringify(payload, null, 2);
@@ -199,13 +237,15 @@ function routeRequest(req, res) {
 
   if (req.method === "POST" && pathname === "/contact") {
     readJsonBody(req)
-      .then((payload) => {
+      .then(async (payload) => {
         const validationError = validateContactRequest(payload);
 
         if (validationError) {
           sendError(res, 400, "BAD_REQUEST", validationError);
           return;
         }
+
+        await sendContactEmail(payload);
 
         const contactId = `contact_${randomUUID().replace(/-/g, "").slice(0, 12)}`;
         sendJson(res, 201, {
@@ -216,6 +256,27 @@ function routeRequest(req, res) {
       .catch((error) => {
         if (error.message === "INVALID_JSON") {
           sendError(res, 400, "BAD_REQUEST", "Invalid request body");
+          return;
+        }
+
+        if (error.message === "EMAIL_NOT_CONFIGURED") {
+          sendError(
+            res,
+            500,
+            "CONFIGURATION_ERROR",
+            "Contact email is not configured on the server",
+          );
+          return;
+        }
+
+        if (error.message === "EMAIL_SEND_FAILED") {
+          process.stderr.write(`EmailJS send failed: ${error.details || "Unknown error"}\n`);
+          sendError(
+            res,
+            502,
+            "EMAIL_SEND_FAILED",
+            "Unable to send contact email",
+          );
           return;
         }
 

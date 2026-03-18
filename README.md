@@ -10,6 +10,15 @@ npm start
 
 The API listens on `http://localhost:3000`.
 
+For `POST /contact` to send email via EmailJS, set these environment variables before starting the server:
+
+```bash
+export EMAILJS_SERVICE_ID=your_service_id
+export EMAILJS_TEMPLATE_ID=your_template_id
+export EMAILJS_PUBLIC_KEY=your_public_key
+export EMAILJS_PRIVATE_KEY=your_private_key # optional, recommended for server-side use
+```
+
 ## Included artifacts
 
 - Local API server: `src/server.js`

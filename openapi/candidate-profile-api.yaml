@@ -153,6 +153,18 @@ paths:
                 $ref: '#/components/schemas/ContactResponse'
         '400':
           $ref: '#/components/responses/BadRequest'
+        '500':
+          description: Server-side email configuration is missing
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '502':
+          description: The email provider could not process the request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
 components:
   parameters:
     IdParam:
