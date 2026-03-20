@@ -9,12 +9,49 @@ servers:
   - url: https://api.jonahanderson.me
     description: Production
 tags:
+  - name: Auth
   - name: Candidate
   - name: Experience
   - name: Projects
   - name: Resume
   - name: Contact
+security:
+  - BearerAuth: []
 paths:
+  /auth/token:
+    post:
+      tags: [Auth]
+      summary: Create a demo bearer token
+      operationId: createAuthToken
+      security: []
+      description: Accepts an email address, sends an auth-request notification, and returns a signed bearer token for demo use.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthTokenRequest'
+      responses:
+        '200':
+          description: Demo bearer token issued
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthTokenResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          description: Server-side auth or email configuration is missing
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '502':
+          description: The email provider could not process the request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
   /candidate:
     get:
       tags: [Candidate]
@@ -27,6 +64,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Candidate'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
   /experience:
     get:
       tags: [Experience]
@@ -50,6 +89,8 @@ paths:
                   $ref: '#/components/schemas/Experience'
         '400':
           $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
   /experience/{id}:
     get:
       tags: [Experience]
@@ -64,6 +105,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Experience'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
         '404':
           $ref: '#/components/responses/NotFound'
   /projects:
@@ -80,6 +123,8 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/ProjectSummary'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
   /projects/{id}:
     get:
       tags: [Projects]
@@ -94,6 +139,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Project'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
         '404':
           $ref: '#/components/responses/NotFound'
   /contact/availability:
@@ -108,6 +155,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Availability'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
   /resume:
     get:
       tags: [Resume]
@@ -132,11 +181,14 @@ paths:
                   - $ref: '#/components/schemas/ResumePdf'
         '400':
           $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
   /contact:
     post:
       tags: [Contact]
       summary: Submit a contact request
       operationId: createContact
+      security: []
       requestBody:
         required: true
         content:
@@ -179,13 +231,45 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
+    Unauthorized:
+      description: Missing or invalid bearer token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
     NotFound:
       description: Resource not found
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: signed demo token
   schemas:
+    AuthTokenRequest:
+      type: object
+      required:
+        - email
+      properties:
+        email:
+          type: string
+          format: email
+          example: recruiter@example.com
+    AuthTokenResponse:
+      type: object
+      required:
+        - access_token
+        - token_type
+      properties:
+        access_token:
+          type: string
+          example: cpat_cmVjcnVpdGVyQGV4YW1wbGUuY29t.0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef
+        token_type:
+          type: string
+          example: Bearer
     Candidate:
       type: object
       required:

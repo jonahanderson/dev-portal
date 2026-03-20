@@ -10,13 +10,33 @@ npm start
 
 The API listens on `http://localhost:3000`.
 
-For `POST /contact` to send email via EmailJS, set these environment variables before starting the server:
+Protected `GET` endpoints require a bearer token from `POST /auth/token`.
+
+For `POST /auth/token` and `POST /contact` to send email via EmailJS, set these environment variables before starting the server:
 
 ```bash
+export AUTH_TOKEN_SECRET=replace_with_a_long_random_string
 export EMAILJS_SERVICE_ID=your_service_id
 export EMAILJS_TEMPLATE_ID=your_template_id
 export EMAILJS_PUBLIC_KEY=your_public_key
 export EMAILJS_PRIVATE_KEY=your_private_key # optional, recommended for server-side use
+```
+
+## Auth flow
+
+1. Request a demo token:
+
+```bash
+curl -X POST http://localhost:3000/auth/token \
+  -H "Content-Type: application/json" \
+  -d '{"email":"recruiter@example.com"}'
+```
+
+2. Use the returned bearer token on protected endpoints:
+
+```bash
+curl http://localhost:3000/candidate \
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN"
 ```
 
 ## Included artifacts
@@ -28,6 +48,7 @@ export EMAILJS_PRIVATE_KEY=your_private_key # optional, recommended for server-s
 
 ## Available endpoints
 
+- `POST /auth/token`
 - `GET /candidate`
 - `GET /experience`
 - `GET /experience/:id`

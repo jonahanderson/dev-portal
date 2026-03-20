@@ -9,14 +9,49 @@
     {
       "key": "baseUrl",
       "value": "http://localhost:3000"
+    },
+    {
+      "key": "bearerToken",
+      "value": ""
     }
   ],
   "item": [
     {
+      "name": "Create Auth Token",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"recruiter@example.com\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/auth/token",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "auth",
+            "token"
+          ]
+        }
+      }
+    },
+    {
       "name": "Get Candidate",
       "request": {
         "method": "GET",
-        "header": [],
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{bearerToken}}"
+          }
+        ],
         "url": {
           "raw": "{{baseUrl}}/candidate",
           "host": [
@@ -32,7 +67,12 @@
       "name": "List Experience",
       "request": {
         "method": "GET",
-        "header": [],
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{bearerToken}}"
+          }
+        ],
         "url": {
           "raw": "{{baseUrl}}/experience",
           "host": [
@@ -48,7 +88,12 @@
       "name": "List Current Experience",
       "request": {
         "method": "GET",
-        "header": [],
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{bearerToken}}"
+          }
+        ],
         "url": {
           "raw": "{{baseUrl}}/experience?current=true",
           "host": [
@@ -70,7 +115,12 @@
       "name": "Get Experience By Id",
       "request": {
         "method": "GET",
-        "header": [],
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{bearerToken}}"
+          }
+        ],
         "url": {
           "raw": "{{baseUrl}}/experience/exp_dat",
           "host": [
@@ -87,7 +137,12 @@
       "name": "List Projects",
       "request": {
         "method": "GET",
-        "header": [],
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{bearerToken}}"
+          }
+        ],
         "url": {
           "raw": "{{baseUrl}}/projects",
           "host": [
@@ -103,7 +158,12 @@
       "name": "Get Project By Id",
       "request": {
         "method": "GET",
-        "header": [],
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{bearerToken}}"
+          }
+        ],
         "url": {
           "raw": "{{baseUrl}}/projects/proj_006",
           "host": [
@@ -120,7 +180,12 @@
       "name": "Get Availability",
       "request": {
         "method": "GET",
-        "header": [],
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{bearerToken}}"
+          }
+        ],
         "url": {
           "raw": "{{baseUrl}}/contact/availability",
           "host": [
@@ -137,7 +202,12 @@
       "name": "Get Resume JSON",
       "request": {
         "method": "GET",
-        "header": [],
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{bearerToken}}"
+          }
+        ],
         "url": {
           "raw": "{{baseUrl}}/resume?format=json",
           "host": [
@@ -159,7 +229,12 @@
       "name": "Get Resume PDF Link",
       "request": {
         "method": "GET",
-        "header": [],
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{bearerToken}}"
+          }
+        ],
         "url": {
           "raw": "{{baseUrl}}/resume?format=pdf",
           "host": [
