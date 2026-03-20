@@ -10,7 +10,7 @@ npm start
 
 The API listens on `http://localhost:3000`.
 
-Protected `GET` endpoints require a bearer token from `POST /auth/token`.
+All endpoints except `POST /auth/token` require a bearer token from `POST /auth/token`.
 
 For `POST /auth/token` and `POST /contact` to send email via EmailJS, set these environment variables before starting the server:
 

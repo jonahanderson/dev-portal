@@ -280,20 +280,20 @@ function buildAuthRequestPayload(email) {
   };
 }
 
-function isProtectedRoute(method, pathname) {
-  if (method !== "GET") {
-    return false;
+function requiresAuth(method, pathname) {
+  if (method === "GET") {
+    return (
+      pathname === "/candidate" ||
+      pathname === "/experience" ||
+      pathname.startsWith("/experience/") ||
+      pathname === "/projects" ||
+      pathname.startsWith("/projects/") ||
+      pathname === "/contact/availability" ||
+      pathname === "/resume"
+    );
   }
 
-  return (
-    pathname === "/candidate" ||
-    pathname === "/experience" ||
-    pathname.startsWith("/experience/") ||
-    pathname === "/projects" ||
-    pathname.startsWith("/projects/") ||
-    pathname === "/contact/availability" ||
-    pathname === "/resume"
-  );
+  return method === "POST" && pathname === "/contact";
 }
 
 function routeRequest(req, res) {
@@ -310,7 +310,7 @@ function routeRequest(req, res) {
     return;
   }
 
-  if (isProtectedRoute(req.method, pathname)) {
+  if (requiresAuth(req.method, pathname)) {
     try {
       const token = getBearerToken(req);
       const authContext = verifyAccessToken(token);

@@ -188,7 +188,6 @@ paths:
       tags: [Contact]
       summary: Submit a contact request
       operationId: createContact
-      security: []
       requestBody:
         required: true
         content:
@@ -204,6 +203,8 @@ paths:
                 $ref: '#/components/schemas/ContactResponse'
         '400':
           $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
         '500':
           description: Server-side email configuration is missing
           content:
