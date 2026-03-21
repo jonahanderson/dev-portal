@@ -1,0 +1,66 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: AWS::Serverless-2016-10-31
+Description: Candidate Profile API deployed on AWS Lambda with HTTP API.
+
+Parameters:
+  AuthTokenSecret:
+    Type: String
+    NoEcho: true
+    Description: Secret used to sign demo bearer tokens.
+  EmailJsServiceId:
+    Type: String
+    Default: ""
+  EmailJsTemplateId:
+    Type: String
+    Default: ""
+  EmailJsPublicKey:
+    Type: String
+    Default: ""
+  EmailJsPrivateKey:
+    Type: String
+    Default: ""
+
+Globals:
+  Function:
+    Runtime: nodejs20.x
+    Timeout: 10
+    MemorySize: 128
+    Architectures:
+      - x86_64
+
+Resources:
+  CandidateProfileApi:
+    Type: AWS::Serverless::HttpApi
+    Properties:
+      StageName: $default
+
+  CandidateProfileFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: .
+      Handler: src/lambda.handler
+      Environment:
+        Variables:
+          AUTH_TOKEN_SECRET: !Ref AuthTokenSecret
+          EMAILJS_SERVICE_ID: !Ref EmailJsServiceId
+          EMAILJS_TEMPLATE_ID: !Ref EmailJsTemplateId
+          EMAILJS_PUBLIC_KEY: !Ref EmailJsPublicKey
+          EMAILJS_PRIVATE_KEY: !Ref EmailJsPrivateKey
+      Events:
+        RootRoute:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref CandidateProfileApi
+            Path: /
+            Method: ANY
+        ProxyRoute:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref CandidateProfileApi
+            Path: /{proxy+}
+            Method: ANY
+
+Outputs:
+  ApiUrl:
+    Description: Base URL for the Lambda-backed API.
+    Value: !Sub "https://${CandidateProfileApi}.execute-api.${AWS::Region}.amazonaws.com"
